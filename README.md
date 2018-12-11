@@ -68,7 +68,7 @@ rna_matrix <- as.matrix(rna)
 rna_matrix_2 <- rna_matrix
 ```
 ## Dimensionality reduction
-We try the various techniques and compare the results.
+We try the various techniques and compare the results. It is observed that PCA is the fastest algorithm, followed by UMAP and lastly t-SNE.
 
 ### Principal Component Analysis (PCA)
 PCA is known to be the 'standard' method for such analysis protocols, as results are consistent every time with no random variables involved. 
@@ -126,3 +126,39 @@ rna_tsne <- Rtsne(rna_matrix_tsne[, -1],
                   max_iter = 1000,
                   pca = FALSE)
 ```
+
+### Uniform Manifold Approximation and Projection
+UMAP is a recent, alternative to t-SNE proposed with (notable decrease in runtime and consistency) [https://www.biorxiv.org/content/early/2018/04/10/298430].
+
+#### UMAP on Protein data
+```r
+adt_umap <- umap(adt)
+```
+
+#### UMAP on RNA data
+```r
+rna_umap <- umap(rna)
+```
+
+## Cell clustering algorithms
+After reducing dimensionality, cell clustering techniques allow us to identify similar populations of cells within the new 2-dimensional space and deduce possible cell types.
+
+### _k_-means clustering
+k-means clustering is used to group points into similar clusters based on similar features. Points are defined on n-axes based on the number of measurements. Based on hypothesis input, random centroids are generated, and points are considered to ‘belong’ to the centroid-defined cluster. The centroids are then repositioned to the centre position of all points in that cluster, and re-clustered until there is no change to attribution of points to clusters. Thus, points belonging to the same group are more similar to each other than to points in other groups.
+#### _k_-means onto PCA-reduced datasets
+
+We estimate less than 15 clusters, so we generate clustering for between 2 to 15 clusters and calculate Within-Group Sum of Squares (**WSS**), the average distance within points of a cluster to its centroid. We take the number of clusters, _k_ to be when **WSS** shows asymptotic behaviour and is minimised.
+
+##### Protein
+```r
+wss <- (nrow(adt_pca) - 1) * sum(apply(adt_pca, 2, var))
+for (i in 2:15)
+  wss[i] <- sum(kmeans(adt_pca, centers = i)$withinss)
+plot(1:15, wss, type = "b",
+     xlab = "Number of Clusters",
+     ylab = "Within groups sum of squares")
+```
+##### RNA
+
+
+### Hierarchical clustering
