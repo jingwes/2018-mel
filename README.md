@@ -103,7 +103,7 @@ We run t-SNE on protein data:
 ```
 set.seed(1)                                                    # for reproducibilty as t-SNE results are not perfectly identical         
 adt_matrix_tsne <- read.csv("common_adt.csv", header = T)
-adt_tsne <- Rtsne(rna_matrix_tsne[, -1],
+adt_tsne <- Rtsne(adt_matrix_tsne[, -1],
                   dims = 2,
                   initial_dims = 52,
                   perplexity = 35,
