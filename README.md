@@ -26,7 +26,7 @@ We also define a theme for plotting later, for aesthetic reason.
                     axis.title = element_blank(),
                     axis.text = element_blank(),
                     axis.ticks = element_blank(),
-                    panel.background = element_blank()
+                    panel.background = element_blank())
 ```
 
 The dimensionality reduction tools t-SNE and UMAP already have a package imported, but not PCA. Hence, we need to define PCA with the following line of code:
