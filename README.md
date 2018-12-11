@@ -270,15 +270,15 @@ n = match(desired_adt, names(adt))
 ggplot(data.frame(x = (adt_tsne$Y[, 1]),
                   y = (adt_tsne$Y[, 2])), aes(x, y)) +
   geom_point(aes(colour = adt_matrix[, n])) +
-  scale_color_gradient(name = desired_rna,
+  scale_color_gradient(name = desired_adt,
                        low = "grey", high = "red1") + our_theme
 ```
 #### RNA
 ```r
 desired_rna = "ENSG00000204287"                               # input marker name
 n = match(desired_rna, names(rna))
-ggplot(data.frame(x = (adt_tsne$Y[, 1]),
-                  y = (adt_tsne$Y[, 2])), aes(x, y)) +
+ggplot(data.frame(x = (rna_tsne$Y[, 1]),
+                  y = (rna_tsne$Y[, 2])), aes(x, y)) +
   geom_point(aes(colour = rna_matrix[, n])) +
   scale_color_gradient(name = desired_rna,
                        low = "grey", high = "navy") + our_theme
